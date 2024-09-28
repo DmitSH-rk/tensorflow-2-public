@@ -58,10 +58,11 @@ img = img/255.0
 input_data = tf.expand_dims(img, axis=0)
 
 # Point the data to be used for testing and run the interpreter
+interpreter.set_tensor(input_details[0]['index'], input_data)
 interpreter.invoke()
 
 # Obtain results and print the predicted category
-predictions = interpreter.run
+predictions = interpreter.get_tensor()
 # Get the label with highest probability
 predicted_label = # YOUR CODE HERE
 # Print the predicted category
