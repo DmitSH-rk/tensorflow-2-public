@@ -35,8 +35,8 @@ interpreter = # YOUR CODE HERE
 # YOUR CODE HERE
 
 # Get input and output tensors.
-input_details = # YOUR CODE HERE
-output_details = # YOUR CODE HERE
+input_details = interpeter.get_input_detials()
+output_details = interpreter.get_output_details()
 
 # Read image with Pillow
 img = Image.open(filename).convert('RGB')
@@ -47,21 +47,20 @@ size = input_shape[:2] if len(input_shape) == 3 else input_shape[1:3]
 
 # Preprocess image
 # Resize the image
-img = # YOUR CODE HERE
+img = img.resize(size)
 # Convert to Numpy with float32 as the datatype
-img = # YOUR CODE HERE
+img = np.array(img, float32)
 # Normalize the image
-img = # YOUR CODE HERE
+img = img/255.0
 
 # Add a batch dimension
-input_data = # YOUR CODE HERE
+input_data = np.expand_dims(img, axis = 0)
 
 # Point the data to be used for testing and run the interpreter
 # YOUR CODE HERE
+interpeter.set_tensor(input_details[0]['index'], input_data)
 
 # Obtain results and print the predicted category
-predictions = # YOUR CODE HERE
-# Get the label with highest probability
-predicted_label = # YOUR CODE HERE
-# Print the predicted category
-# YOUR CODE HERE
+predictions =interpreter.get_tensor(output_details[0]['index'])
+predicted_label = np.argmax(predictions)
+print(labels[predicted_label])
