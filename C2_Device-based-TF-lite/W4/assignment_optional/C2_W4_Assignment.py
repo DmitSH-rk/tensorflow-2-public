@@ -30,12 +30,13 @@ model_path = args.model_path
 labels = ['Rock', 'Paper', 'Scissors']
 
 # Load TFLite model and allocate tensors
-interpreter = # YOUR CODE HERE
+interpreter = Interpeter(model_path=model_path)
 #Allocate tensors to the interpreter
+interpeter.allocate()
 # YOUR CODE HERE
 
 # Get input and output tensors.
-input_details = # YOUR CODE HERE
+input_details = interpreter.get_input_details()
 output_details = # YOUR CODE HERE
 
 # Read image with Pillow
@@ -47,20 +48,20 @@ size = input_shape[:2] if len(input_shape) == 3 else input_shape[1:3]
 
 # Preprocess image
 # Resize the image
-img = # YOUR CODE HERE
+img = img.resize(IMAGE_SIZE)
 # Convert to Numpy with float32 as the datatype
-img = # YOUR CODE HERE
+img = np.ndarray(dtype=float32)
 # Normalize the image
-img = # YOUR CODE HERE
+img = img/255.0
 
 # Add a batch dimension
-input_data = # YOUR CODE HERE
+input_data = tf.expand_dims(img, axis=0)
 
 # Point the data to be used for testing and run the interpreter
-# YOUR CODE HERE
+interpreter.invoke()
 
 # Obtain results and print the predicted category
-predictions = # YOUR CODE HERE
+predictions = interpreter.run
 # Get the label with highest probability
 predicted_label = # YOUR CODE HERE
 # Print the predicted category
